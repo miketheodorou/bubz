@@ -46,10 +46,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name='index'
         options={{
-          title: 'Food',
-
+          title: 'Feed Lily',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons size={24} name='bowl' color={color} />
+            <MaterialCommunityIcons size={24} name='dog' color={color} />
           )
         }}
       />
