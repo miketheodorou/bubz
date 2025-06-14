@@ -1,6 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/database/supabase';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView } from 'react-native';
 
