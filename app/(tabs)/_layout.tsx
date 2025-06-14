@@ -18,6 +18,9 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        tabBarLabelStyle: {
+          marginTop: 4
+        },
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
@@ -28,11 +31,25 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name='food-history'
+        options={{
+          title: 'Food Log',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name='calendar-month'
+              size={24}
+              color={color}
+            />
+          )
+        }}
+      />
+      <Tabs.Screen
         name='index'
         options={{
           title: 'Food',
+
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons size={28} name='bowl' color={color} />
+            <MaterialCommunityIcons size={24} name='bowl' color={color} />
           )
         }}
       />
@@ -42,7 +59,7 @@ export default function TabLayout() {
           title: 'Walks',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              size={28}
+              size={24}
               name='dog-service'
               color={color}
             />
