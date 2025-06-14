@@ -7,6 +7,6 @@ module.exports = defineConfig([
   expoConfig,
   ...pluginQuery.configs['flat/recommended'],
   {
-    ignores: ['dist/*']
+    ignores: ['dist/*', 'lib/database/db.types.ts']
   }
 ]);

@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "gen-types": "dotenv -e .env -- sh -c 'npx supabase@latest gen types typescript --project-id $EXPO_PUBLIC_SUPABASE_PROJECT_ID --schema public' > lib/database/types.ts"
+    "_gen-types": "npx supabase@latest gen types typescript --project-id $EXPO_PUBLIC_SUPABASE_PROJECT_ID --schema public > lib/database/db.types.ts",
+    "gen-types": "dotenv -c -- pnpm run _gen-types"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
