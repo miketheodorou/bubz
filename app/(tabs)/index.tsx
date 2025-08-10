@@ -3,6 +3,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 
@@ -48,23 +49,24 @@ export default function FoodView() {
         <View
           style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
-          <TouchableOpacity
-            style={{
-              padding: 16,
-              backgroundColor: '#a855f7',
-              borderRadius: '100%',
-              aspectRatio: 1 / 1,
-              width: '50%',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <FontAwesome6
-              name='bowl-rice'
-              size={56}
-              color={Colors[colorScheme ?? 'light']?.tint}
-            />
-          </TouchableOpacity>
+          <Link href='/(modals)/meal-confirmation' asChild>
+            <TouchableOpacity
+              style={{
+                padding: 48,
+                backgroundColor: '#a855f7',
+                borderRadius: '100%',
+                aspectRatio: 1 / 1,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <FontAwesome6
+                name='bowl-rice'
+                size={56}
+                color={Colors[colorScheme ?? 'light']?.text}
+              />
+            </TouchableOpacity>
+          </Link>
         </View>
       </SafeAreaView>
     </ThemedView>

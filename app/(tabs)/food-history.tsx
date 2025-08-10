@@ -42,6 +42,7 @@ export default function FoodView() {
       <SafeAreaView style={{ flex: 1, paddingBottom: tabBarHeight }}>
         <CalendarProvider date={date} onDateChanged={setDate}>
           <ExpandableCalendar
+            key={backgroundColor}
             theme={{
               backgroundColor,
               calendarBackground: backgroundColor,
