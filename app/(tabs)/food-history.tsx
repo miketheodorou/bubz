@@ -6,7 +6,13 @@ import { getMeals } from '@/lib/database/api/meals';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Alert, FlatList, SafeAreaView } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  SafeAreaView,
+  View
+} from 'react-native';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 
 export default function FoodView() {
@@ -48,8 +54,16 @@ export default function FoodView() {
           />
           <ThemedView style={{ flex: 1, paddingTop: 20 }}>
             {isLoading ? (
-              <ThemedText>Loading meals...</ThemedText>
-            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <ActivityIndicator size='large' color='#a855f7' />
+              </View>
+            ) : data?.length ? (
               <FlatList
                 data={data}
                 keyExtractor={(item) => `${item.id}`}
@@ -57,6 +71,15 @@ export default function FoodView() {
                   <MealCard meal={item} onPress={handleMealPress} />
                 )}
               />
+            ) : (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <ThemedText>No meals found for this date.</ThemedText>
+              </View>
             )}
           </ThemedView>
         </CalendarProvider>
