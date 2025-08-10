@@ -1,10 +1,11 @@
+import { MealCard, MealData } from '@/components/MealCard';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { getAllMeals } from '@/lib/database/api/meals';
+import { getMeals } from '@/lib/database/api/meals';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 
 export default function FoodView() {
@@ -13,30 +14,38 @@ export default function FoodView() {
     new Date().toISOString().split('T')[0]
   );
   const { data, isLoading } = useQuery({
-    queryKey: ['meals'],
-    queryFn: getAllMeals
+    queryKey: ['meals', date],
+    queryFn: () => getMeals(date)
   });
+
+  const handleMealPress = (meal: MealData) => {
+    Alert.alert(
+      `${meal.meal_type}`,
+      `Status: ${meal.is_eaten ? 'Eaten' : 'Not eaten yet'}\nTime: ${new Date(
+        meal.meal_timestamp
+      ).toLocaleString()}`,
+      [{ text: 'OK', style: 'default' }]
+    );
+  };
 
   return (
     <ThemedView style={{ flex: 1, paddingBottom: tabBarHeight }}>
       <SafeAreaView style={{ flex: 1, paddingBottom: tabBarHeight }}>
         <CalendarProvider date={date} onDateChanged={setDate}>
           <ExpandableCalendar />
-          <ThemedText>{date}</ThemedText>
-
-          {isLoading ? (
-            <ThemedText>Loading...</ThemedText>
-          ) : (
-            <FlatList
-              data={data}
-              keyExtractor={(item) => `${item.id}`}
-              renderItem={({ item }) => (
-                <ThemedView>
-                  <ThemedText>{item.meal_type}</ThemedText>
-                </ThemedView>
-              )}
-            />
-          )}
+          <ThemedView style={{ flex: 1, paddingTop: 20 }}>
+            {isLoading ? (
+              <ThemedText>Loading meals...</ThemedText>
+            ) : (
+              <FlatList
+                data={data}
+                keyExtractor={(item) => `${item.id}`}
+                renderItem={({ item }) => (
+                  <MealCard meal={item} onPress={handleMealPress} />
+                )}
+              />
+            )}
+          </ThemedView>
         </CalendarProvider>
       </SafeAreaView>
     </ThemedView>
