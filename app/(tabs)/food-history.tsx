@@ -4,7 +4,7 @@ import { getAllMeals } from '@/lib/database/api/meals';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 
 export default function FoodView() {
@@ -17,30 +17,28 @@ export default function FoodView() {
     queryFn: getAllMeals
   });
 
-  if (isLoading) return <ThemedText>Loading...</ThemedText>;
-
   return (
     <ThemedView style={{ flex: 1, paddingBottom: tabBarHeight }}>
       <SafeAreaView style={{ flex: 1, paddingBottom: tabBarHeight }}>
         <CalendarProvider date={date} onDateChanged={setDate}>
           <ExpandableCalendar />
           <ThemedText>{date}</ThemedText>
+
+          {isLoading ? (
+            <ThemedText>Loading...</ThemedText>
+          ) : (
+            <FlatList
+              data={data}
+              keyExtractor={(item) => `${item.id}`}
+              renderItem={({ item }) => (
+                <ThemedView>
+                  <ThemedText>{item.meal_type}</ThemedText>
+                </ThemedView>
+              )}
+            />
+          )}
         </CalendarProvider>
       </SafeAreaView>
     </ThemedView>
-
-    //   <SafeAreaView>
-
-    //     {/* <FlatList
-    //       data={data}
-    //       renderItem={({ item }) => (
-    //         <ThemedView>
-    //           <ThemedText>{item.meal_type}</ThemedText>
-    //         </ThemedView>
-    //       )}
-    //       keyExtractor={(item) => item.id}
-    //     /> */}
-    //   </SafeAreaView>
-    // </ThemedView>
   );
 }
